@@ -7,6 +7,9 @@ from conf import MODEL
 """импортируем переменную из конф"""
 from faker.providers.isbn import isbn
 
+Faker.seed(random)
+fake = Faker()
+
 def title() -> str:
     """определние автора из файла тхт"""
     with open("books.txt") as file:
@@ -22,8 +25,6 @@ def pages() -> int:
 
 def isbn13(separator: str = "-"):
     """рандом для isbn"""
-    Faker.seed(random)
-    fake = Faker()
     for _ in range(5):
         return fake.isbn13()
 
