@@ -42,7 +42,7 @@ def author() -> str:
 
 def main():
     dict_all = []
-    for pk in range(1, 11):
+    for pk in range(1, 101):
 
         dict_1 = {"MODEL": MODEL,
             "pk": pk,
