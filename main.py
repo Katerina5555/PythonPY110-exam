@@ -1,11 +1,13 @@
 # encoding = "utf-8"
 import random
-import re
 from faker import Faker
 import json
 from conf import MODEL
 """импортируем переменную из конф"""
 from faker.providers.isbn import isbn
+
+Faker.seed(random)
+fake = Faker()
 
 def title() -> str:
     """определние автора из файла тхт"""
@@ -22,8 +24,6 @@ def pages() -> int:
 
 def isbn13(separator: str = "-"):
     """рандом для isbn"""
-    Faker.seed(random)
-    fake = Faker()
     for _ in range(5):
         return fake.isbn13()
 
@@ -41,8 +41,9 @@ def author() -> str:
     return random.choice(authors)
 
 def main():
-    pk = 1
-    for pk in range(1, 11, 1):
+    dict_all = []
+    for pk in range(1, 101):
+
         dict_1 = {"MODEL": MODEL,
             "pk": pk,
             "fields": {
@@ -55,10 +56,11 @@ def main():
                   "author": author()
                   }
             }
-
+        dict_all.append(dict_1)
         with open("package.json", "w") as f:
-            json.dump(dict_1, f, indent=4, ensure_ascii=False)
-            pk += 1
+            json.dump(dict_all, f, indent=4, ensure_ascii=False)
+        pk += 1
+        continue
 
 
 if __name__ == '__main__':
@@ -68,25 +70,6 @@ if __name__ == '__main__':
     # print(f'"isbn": {isbn13()}')    # check isbn
     # print(f'"rating": {rating()}')  # check rating
     # print(f'"price": {price()}')  # check price
-    # print(f'"author": {author()}')  # check price
+    # print(f'"author": {author()}')  # check author
     main()
-
-
-    # Что должно быть передано:
-    # {
-    #     "model": "shop_final.book",
-    #     "pk": 1,
-    #     "fields": {
-    #         "title": "test_book",
-    #         "year": 2020,
-    #         "pages": 123,
-    #         "isbn13": "978-1-60487-647-5",
-    #         "rating": 5,
-    #         "price": 123456.0,
-    #         "author": [
-    #             "test_author_1",
-    #             "test_author_2"
-    #         ]
-    #     }
-    # }
 
